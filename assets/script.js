@@ -128,7 +128,7 @@ function forecastInfo(apiResult){
     var newTemp;
     var newHumidity;
 
-    $(".weekForecast").empty();
+   $(".weekForecast").empty();
 
     for (var i = 1; i <=5; i++){
         newDates = moment().add(i,"days").format("l");
@@ -139,9 +139,11 @@ function forecastInfo(apiResult){
 
         $(".weekForecast").append(
             `
-                <div class="card" >
+                <div class="card mb-4" >
                     <h4 class="card-title">${newDates}</h4>
-                    <img src="${iconlink}"/>               
+                    <div class="card-img img-fluid>
+                        <img src="${iconlink}"/>               
+                    </div>
                     <p class="card-text"> Temperature: ${newTemp}</p>
                     <p class="card-text"> Humidity: ${newHumidity}</p> 
                 </div> 
