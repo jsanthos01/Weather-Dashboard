@@ -7,6 +7,7 @@ body{
 h2 {
     font-family: 'Baloo Bhai', cursive;
     padding: 25px;
+    text-align: center;
  
 }
 .header {
@@ -18,10 +19,7 @@ h2 {
     font-size: 50px;
 
 }
-.container{
-    display: flex;
 
-}
 
 .search{
     padding: 25px;
@@ -30,15 +28,39 @@ h2 {
     height: 100vh;
 }
 
-.currentForecast{
-    margin-top: 10px;
-    background-color: whitesmoke;
-}
-.weekForecast{
-    margin-top: 35px;
-    background-color: cornsilk;
+.search h2{
+    text-align: start;
 }
 
+#previousSearch button {
+      width: 100px;
+      padding: 12px;
+      margin: 0;
+      display: block;
+}
+.currentForecast{
+    margin-top: 10px;
+    background-color: #fafafa;
+}
+
+.forecastContainer{
+    margin-top: 35px;
+    background-color: #fafafa;
+}
+
+.weekForecast {
+    display: flex;
+    justify-content: center;
+
+}
+.uvIndex {
+    padding: 5px;
+}
 .card {
     padding: 35px;
+    margin: 15px;
+    color: black;
+    background-color: white;
+    border-radius: 15%;
+    border: 1px solid black;
 }

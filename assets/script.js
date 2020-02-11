@@ -1,10 +1,13 @@
 var cityInput;
+var longitude;
+var latitude;
+var iconDiv = $(".icon");
 var cityName = $(".cityName");
 var searchBtn = $("#searchBtn");
 var temperature = $("#temperature");
 var humidity = $("#humidity");
 var windSpeed = $("#windSpeed");
-var uvIndex = $("#uvIndex");
+var uvDisplay = $("#uvIndex");
 var previousSearch = $("#previousSearch");
 var date = moment().format("L");
 
@@ -32,92 +35,117 @@ function createBtn (){
 
     buttonsArr.push(cityInput);
     localStorage.buttonsArr = JSON.stringify( buttonsArr);
-    previousSearch.append(`<button class="btn btn-outline-primary" onclick="getInfo('${cityInput}')" id="${cityInput}">${cityInput}</button><br/>`);
+    previousSearch.append(`<button class="btn btn-outline-primary " onclick="getInfo('${cityInput}')" id="${cityInput}">${cityInput}</button><br/>`);
     getInfo(`${cityInput}`);
 
 }
 
-function getInfo(cityInput){
+function getInfo(cityInput,){
+    //Current Day Information
     $.ajax({
         url:`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=78dc899eb37cab91867a345825f4223c`,
         method:"GET"
     }).then(addInfo);
 
+    //5 Day Forecast Information
     $.ajax({
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=78dc899eb37cab91867a345825f4223c`,
         method: "GET"
     }).then(forecastInfo);
 }
 
+//Current Day Information
 function addInfo(apiResult){
+    var iconcode =apiResult.weather[0].icon;
+    var iconURL ="http://openweathermap.org/img/w/" + iconcode + ".png";
+
+    longitude = apiResult.coord.lon
+    latitude = apiResult.coord.lat
     console.log(apiResult);
+    console.log(longitude);
+    console.log(latitude);
     //Current Info
     temperature.empty();
     humidity.empty();
     windSpeed.empty();
     temperature.empty();
+    iconDiv.empty();
 
-    cityName.html(`${apiResult.name} (${date}) ${apiResult.weather[0].icon}`)//city name// wrong
-    temperature.append(`<p>Temperature: ${apiResult.main.temp} &#8457;</p>`);
-    humidity.append(`<p>Humidity: ${apiResult.main.humidity} %</p>`);
-    windSpeed.append(`<p>Wind Speed: ${apiResult.wind.speed} MPH</p>`);
-    //uvIndex.append();
+    cityName.html(`${apiResult.name} (${date})`)//city name// wrong
+    temperature.append(`<h4>Temperature: ${apiResult.main.temp} &#8457;</h4>`);
+    humidity.append(`<h4>Humidity: ${apiResult.main.humidity} %</h4>`);
+    windSpeed.append(`<h4>Wind Speed: ${apiResult.wind.speed} MPH</h4>`);  
+    iconDiv.append(`<img src="${iconURL}" style="height: 150px;"/>`);
 
+    getUV(longitude, latitude);
 }
 
-    //5 Day Forecast
+function getUV(lon, lat){
+    //UV index information 
+    $.ajax({
+        url: `http://api.openweathermap.org/data/2.5/uvi?appid=78dc899eb37cab91867a345825f4223c&lat=${lat}&lon=${lon}`,
+        method: "GET"
+    }).then(addCurrentUV);
+}
+
+function addCurrentUV(apiResult){
+
+    var uvIndex = apiResult.value;
+    console.log(` CURRENT UV index ${uvIndex}`);
+    var background;
+
+    if(uvIndex <= 3){
+        //green
+        background = "#b9f6ca"
+    }else if (uvIndex >= 3 || uvIndex <= 6) {
+        //yellow
+        background = "#ffee58";
+    }
+    else if (uvIndex >= 6 || uvIndex <= 8) {
+        //orange
+        background = "#ff9800";
+    }
+    else {
+        //red
+        background = "#bf360c";
+    }
+    uvDisplay.empty();
+    var uvHeader = $("<h4>");
+
+    uvHeader.text(`UV Index: `);
+    uvHeader.append(`<span class="uvIndex" style="background-color: ${background};">${uvIndex}</span>`)
+    uvDisplay.append(uvHeader);
+}
+
+//5 Day Forecast
 function forecastInfo(apiResult){
+    
     console.log(apiResult);
-    var newDates;
     var icon;
+    var iconlink;
+    var newDates;
     var newTemp;
     var newHumidity;
+
+    $(".weekForecast").empty();
 
     for (var i = 1; i <=5; i++){
         newDates = moment().add(i,"days").format("l");
         newTemp = apiResult.list[i].main.temp; 
         newHumidity = apiResult.list[i].main.humidity; 
-        icon = apiResult.list[i].main.icon; 
+        icon = apiResult.list[i].weather[i].icon;
+        iconlink ="http://openweathermap.org/img/w/" + icon + ".png";
 
-        // $(".weekForecast").append(
-        //     `<div class="card">
-        //         <h2>Hello</h2>
-        //         <h2>Hello</h2>
-        //         <h2>Hello</h2>
-        //         <h2>Hello</h2>
-
-        //     </div>
-             
-        //     `
-        // )
+        $(".weekForecast").append(
+            `
+                <div class="card" >
+                    <h4 class="card-title">${newDates}</h4>
+                    <p class="card-text"> Temperature: ${newTemp}</p>
+                    <p class="card-text"> Humidity: ${newHumidity}</p> 
+                    <img src="${iconURL}" style="height: 150px;"/>               
+                </div> 
+            `
+        )
     }
 }
 
-    // for (var i = 1; i <=5; i++){
-    //     var newDates = moment().add(i,"days").format("l");
-    //     var futureTemp = apiResult.list[i]; 
-
-    // }
-    // $(".weekForecast").append(
-
-    // )
-
-
-    // for (var i=1; i <=5; i++){
-    //     var futureDates = moment().add(i, 'days').format('l');
-    //     const listFutureDay =apiResult.list[i];
-    //     var temper = listFutureDay.main.temp;
-    //     const temperature = temper;
-    //     const humidity = listFutureDay.main.humidity;
-    //     const windSpeed = listFutureDay.wind.speed;
-    //     const latitude = apiResult.city.coord.lat;
-    //     const longitude = apiResult.city.coord.lon;
-    //     $(".futureDays").append(
-    //       `
-    //       <div id="day${i}" class="card">
-    //           <h5>${futureDates}</h5>
-    //           <p>Temp: ${temperature}°</p>
-    //           <p>Humidity: ${humidity}%</p>
-    //       </div>
-    //       `
-    //     )
