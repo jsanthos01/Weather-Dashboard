@@ -1,0 +1,44 @@
+body{
+    box-sizing: border-box; 
+    margin: 0;
+
+}
+
+h2 {
+    font-family: 'Baloo Bhai', cursive;
+    padding: 25px;
+ 
+}
+.header {
+    padding: 35px;
+    font-family: 'Baloo Bhai', cursive;
+    text-align: center;
+    color: white;
+    background-color: black;
+    font-size: 50px;
+
+}
+.container{
+    display: flex;
+
+}
+
+.search{
+    padding: 25px;
+    color: blue;
+    background-color: #e1f5fe;
+    height: 100vh;
+}
+
+.currentForecast{
+    margin-top: 10px;
+    background-color: whitesmoke;
+}
+.weekForecast{
+    margin-top: 35px;
+    background-color: cornsilk;
+}
+
+.card {
+    padding: 35px;
+}
