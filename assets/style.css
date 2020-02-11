@@ -1,12 +1,12 @@
 body{
     box-sizing: border-box; 
     margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
 
 }
 
 h2 {
     font-family: 'Baloo Bhai', cursive;
-    padding: 25px;
     text-align: center;
  
 }
@@ -41,6 +41,7 @@ h2 {
 .currentForecast{
     margin-top: 10px;
     background-color: #fafafa;
+    padding: 15px;
 }
 
 .forecastContainer{
@@ -56,6 +57,14 @@ h2 {
 .uvIndex {
     padding: 5px;
 }
+
+.icon img{
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid black;
+
+}
 .card {
     padding: 35px;
     margin: 15px;
@@ -63,4 +72,8 @@ h2 {
     background-color: white;
     border-radius: 15%;
     border: 1px solid black;
+}
+
+.card img{
+    width: 50px;
 }

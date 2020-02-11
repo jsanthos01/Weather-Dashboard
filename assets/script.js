@@ -56,6 +56,7 @@ function getInfo(cityInput,){
 
 //Current Day Information
 function addInfo(apiResult){
+    console.log(apiResult)
     var iconcode =apiResult.weather[0].icon;
     var iconURL ="http://openweathermap.org/img/w/" + iconcode + ".png";
 
@@ -75,7 +76,7 @@ function addInfo(apiResult){
     temperature.append(`<h4>Temperature: ${apiResult.main.temp} &#8457;</h4>`);
     humidity.append(`<h4>Humidity: ${apiResult.main.humidity} %</h4>`);
     windSpeed.append(`<h4>Wind Speed: ${apiResult.wind.speed} MPH</h4>`);  
-    iconDiv.append(`<img src="${iconURL}" style="height: 150px;"/>`);
+    iconDiv.append(`<img src="${iconURL}"/>`);
 
     getUV(longitude, latitude);
 }
@@ -121,7 +122,7 @@ function addCurrentUV(apiResult){
 function forecastInfo(apiResult){
     
     console.log(apiResult);
-    var icon;
+    var iconImg;
     var iconlink;
     var newDates;
     var newTemp;
@@ -133,16 +134,16 @@ function forecastInfo(apiResult){
         newDates = moment().add(i,"days").format("l");
         newTemp = apiResult.list[i].main.temp; 
         newHumidity = apiResult.list[i].main.humidity; 
-        icon = apiResult.list[i].weather[i].icon;
-        iconlink ="http://openweathermap.org/img/w/" + icon + ".png";
+        iconImg = apiResult.list[i].weather[0].icon;
+        iconlink ="http://openweathermap.org/img/w/" + iconImg + ".png";
 
         $(".weekForecast").append(
             `
                 <div class="card" >
                     <h4 class="card-title">${newDates}</h4>
+                    <img src="${iconlink}"/>               
                     <p class="card-text"> Temperature: ${newTemp}</p>
                     <p class="card-text"> Humidity: ${newHumidity}</p> 
-                    <img src="${iconURL}" style="height: 150px;"/>               
                 </div> 
             `
         )
