@@ -1,52 +1,61 @@
 body{
     box-sizing: border-box; 
     margin: 0;
-    font-family: 'Josefin Sans', sans-serif;
-
+    font-family: monospace;
 }
 
 h2 {
-    font-family: 'Baloo Bhai', cursive;
+    font-family: 'IBM Plex Serif', serif;
     text-align: center;
- 
+    color: #e91e63;
+    text-shadow: 5px 5px #f0629136;
 }
 .header {
     padding: 35px;
-    font-family: 'Baloo Bhai', cursive;
+    font-family: 'IBM Plex Serif', serif;
     text-align: center;
     color: white;
-    background-color: black;
+    background-color: #0f1f7a;
     font-size: 50px;
+    text-shadow: 5px 5px rgba(255, 255, 255, 0.315);
 
-}
 
-
-.search{
-    padding: 25px;
-    color: blue;
-    background-color: #e1f5fe;
-    height: 100vh;
-}
-
-.search h2{
-    text-align: start;
-}
-
-#previousSearch button {
-      width: 100px;
-      padding: 12px;
-      margin: 0;
-      display: block;
 }
 .currentForecast{
     margin-top: 10px;
-    background-color: #fafafa;
+    background-color: #e1f5fe;
     padding: 15px;
 }
 
+.currentForecast .row{
+    display: flex;
+    align-items: center;
+}
+
+.currentForecast .row .mainTxt {
+    padding: 45px;
+    text-align: center;
+}
+
+.currentForecast .row .icon img {
+    margin: auto;
+    display: block;
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+}
+
+.currentForecast .row .mainTxt .uvIndex {
+    padding: 10px;
+}
+
 .forecastContainer{
-    margin-top: 35px;
-    background-color: #fafafa;
+    background-color: #e1f5fe;
+    padding: 25px;
+}
+
+.forecastContainer h2{
+    padding: 25px;
 }
 
 .weekForecast {
@@ -54,26 +63,70 @@ h2 {
     justify-content: center;
 
 }
-.uvIndex {
-    padding: 5px;
+
+.search{
+    padding: 25px;
+    color: blue;
+    background-color: #e1f5fe;
 }
 
-.icon img{
-    height: 150px;
-    border-radius: 50%;
-    background: white;
-    border: 1px solid black;
+.search h2{
+    text-align: start;
+}
+
+#previousSearch button {
+    
+    width: 100%;
+    padding: 12px;
+    margin: 0;
+    display: block;
+    border-radius: 80px;
+    font-size: 15px;
+    font-weight: bold;
+    
+}
+#previousSearch button:hover {
+    
+    width: 100%;
+    padding: 12px;
+    margin: 0;
+    display: block;
+    border-radius: 80px;
+    background: #0575E6;  
+    background: -webkit-linear-gradient(to right, #021B79, #0575E6);  
+    background: linear-gradient(to right, #021B79, #0575E6); 
+    animation: gradient 15s ease infinite;
 
 }
-.card {
-    padding: 35px;
+
+@media (min-width: 768px){
+    .col-md-4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: none;
+    }
+}
+
+.forecastContainer .weekForecast .cardStuff{
+    background-color: rgb(19, 19, 99);
+    padding: 15px;
     margin: 15px;
-    color: black;
-    background-color: white;
-    border-radius: 15%;
-    border: 1px solid black;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
 }
 
-.card img{
-    width: 50px;
+.forecastContainer .weekForecast .cardStuff p{
+    font-size: 20px;
+    color:#ffc6d9;
+    margin-top: 10px;
+}
+.forecastContainer .weekForecast .cardStuff img {
+    padding: 20px;
+    margin: auto;
+    display: block;
+    border-radius: 50%;
+    background-color: white;
+    
 }

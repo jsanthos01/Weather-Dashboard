@@ -25,7 +25,7 @@ searchBtn.on("click", createBtn);
 
 function createBtn (){
     cityInput = $("#citySearch").val();
-
+    
     //Checks if input has already been searched. If so, do not search again
     for (var i = 0; i < buttonsArr.length; i++){
         if ( cityInput == buttonsArr[i] ){
@@ -35,12 +35,12 @@ function createBtn (){
 
     buttonsArr.push(cityInput);
     localStorage.buttonsArr = JSON.stringify( buttonsArr);
-    previousSearch.append(`<button class="btn btn-outline-primary " onclick="getInfo('${cityInput}')" id="${cityInput}">${cityInput}</button><br/>`);
+    previousSearch.append(`<button class="btn btn-outline-primary" onclick="getInfo('${cityInput}')" id="${cityInput}">${cityInput} </button><br/>`);
     getInfo(`${cityInput}`);
 
 }
 
-function getInfo(cityInput,){
+function getInfo(cityInput){
     //Current Day Information
     $.ajax({
         url:`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=78dc899eb37cab91867a345825f4223c`,
@@ -73,10 +73,10 @@ function addInfo(apiResult){
     iconDiv.empty();
 
     cityName.html(`${apiResult.name} (${date})`)//city name// wrong
-    temperature.append(`<h4>Temperature: ${apiResult.main.temp} &#8457;</h4>`);
+    temperature.append(`<h1>${apiResult.main.temp} &#8457;</h1>`);
     humidity.append(`<h4>Humidity: ${apiResult.main.humidity} %</h4>`);
     windSpeed.append(`<h4>Wind Speed: ${apiResult.wind.speed} MPH</h4>`);  
-    iconDiv.append(`<img src="${iconURL}"/>`);
+    iconDiv.append(`<img src="${iconURL}" class="img-fluid"/>`);
 
     getUV(longitude, latitude);
 }
@@ -90,7 +90,6 @@ function getUV(lon, lat){
 }
 
 function addCurrentUV(apiResult){
-
     var uvIndex = apiResult.value;
     console.log(` CURRENT UV index ${uvIndex}`);
     var background;
@@ -130,23 +129,23 @@ function forecastInfo(apiResult){
 
    $(".weekForecast").empty();
 
-    for (var i = 1; i <=5; i++){
-        newDates = moment().add(i,"days").format("l");
+    for (var i = 7;i < 40; i+=8){
+        newDates = apiResult.list[i].dt_txt;
         newTemp = apiResult.list[i].main.temp; 
         newHumidity = apiResult.list[i].main.humidity; 
         iconImg = apiResult.list[i].weather[0].icon;
-        iconlink ="http://openweathermap.org/img/w/" + iconImg + ".png";
+        iconlink =`http://openweathermap.org/img/w/${iconImg}.png`;
 
         $(".weekForecast").append(
             `
-                <div class="card mb-4" >
-                    <h4 class="card-title">${newDates}</h4>
-                    <div class="card-img img-fluid>
-                        <img src="${iconlink}"/>               
-                    </div>
-                    <p class="card-text"> Temperature: ${newTemp}</p>
-                    <p class="card-text"> Humidity: ${newHumidity}</p> 
-                </div> 
+            <div class="col-lg-3 col-md-6 col-12 cardStuff">
+                <h4 >${newDates}</h4>
+                <img src="${iconlink}" />               
+                <p > Temperature: ${newTemp}</p>
+                <p> Humidity: ${newHumidity}</p> 
+            </div>
+                
+            
             `
         )
     }
