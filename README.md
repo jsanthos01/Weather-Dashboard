@@ -6,7 +6,7 @@ A simple application that allows you to get information on the current weather a
  * OpenWeather's Current Weather and 5 day forecast APIs
  * Bootstrap
  * HTML & CSS
- * Javacsript
+ * jQuery
 ```
 
 ## Live Deployment
